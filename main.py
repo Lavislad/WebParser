@@ -5,17 +5,20 @@ import re
 token = '7827018602:AAH7ruDBiMDpmJnop0tWirxCvojStIUDP64'
 bot = telebot.TeleBot(token)
 URL = 'None'
+waiting_for_url = False
 
-@bot.message_handler(commands=['setURL'], content_types=['text'])
-def take_url(message):
+@bot.message_handler(commands=['setURL'])
+def handle_take_url(message):
+    global waiting_for_url
     bot.send_message(message.chat.id, 'Enter URL')
+    waiting_for_url = True
 
-    def take_url(message):
-        global URL
-        URL = message.text
-
-    take_url(message)
+@bot.message_handler(func=lambda message: waiting_for_url, content_types=['text'])
+def take_url(message):
+    global URL, waiting_for_url
+    URL = message.text
     bot.send_message(message.chat.id, 'URL is set')
+    waiting_for_url = False
 
 @bot.message_handler(commands=['currentURL'])
 def currentURL(message):
