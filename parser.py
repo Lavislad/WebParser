@@ -6,8 +6,8 @@ def parser(url):
     soup = BeautifulSoup(r.text, 'html.parser')
     news_elem = soup.find('div', class_='elem')
     title = news_elem.find('h3').get_text()
-    date = news_elem.find('h4', class_='date')
-    full_text = news_elem.find('p')
-    return title
+    date = news_elem.find('h4', class_='date').get_text()
+    full_text = news_elem.find('p').get_text()
+    return [title, date, full_text]
 
 print(parser('https://vlados.akeka.ru/news/'))
