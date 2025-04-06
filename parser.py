@@ -26,4 +26,8 @@ def parser(url):
         }
     return result
 
-print(parser('https://vlados.akeka.ru/news/'))
+for i in range(2):
+    print(parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Title'))
+    print(parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Date'))
+    print(parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Full_text'))
+    print('\n')
