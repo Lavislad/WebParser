@@ -30,4 +30,8 @@ def clearURL(message):
     URL = 'None'
     bot.send_message(message.chat.id, 'URL has been cleared!')
 
+@bot.message_handler(commands=['parse'])
+def handle_take_url(message):
+    bot.send_message(message.chat.id, f'Название: {parser(URL)[0]}')
+
 bot.polling()
