@@ -14,17 +14,16 @@ def parser(url):
     result = {}
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
-    print(soup)
-    products = soup.find_all('div', attrs={'class': '_2rw4E _2g7lE'})
-    print(products)
-    for i in products:
-        title = i.find('span', class_='ds-text ds-text_lineClamp_2 ds-text_weight_med ds-text_color_text-primary ds-text_typography_lead-text ds-text_lead-text_normal ds-text_lead-text_med ds-text_lineClamp').get_text()
-        price = i.find('span', class_='cds-text ds-text_weight_bold ds-text_color_price-sale ds-text_typography_headline-5 ds-text_headline-5_tight ds-text_headline-5_bold').get_text()
-        link = i.fint('a', attrs={'class': 'EQlfk'}).get_text()
-        result[f'{i}'].append(f'Product {i}')
-        result[f'{i}'][f'Product {i}'].append(f'Title: {title}')
-        result[f'{i}'][f'Product {i}'].append(f'Price: {price}')
-        result[f'{i}'][f'Product {i}'].append(f'link: {link}')
+    news = soup.find_all('div', attrs={'class': 'elem'})
+    for index, item in enumerate(news):
+        title = item.find('h3').get_text()
+        date = item.find('h4', class_='date').get_text()
+        full_text = item.find('p').get_text()
+        result[f'News {index + 1}'] = {
+            'Title': title,
+            'Date': date,
+            'Full_text': full_text,
+        }
     return result
 
-print(parser('https://market.yandex.ru/search?text=universal%20audio%20volt%201&hid=91027&rs=eJwz0gpgrGLhmHyc9RMjBweDBIMCkPmXkQEIeplA5FQwuYIJKAwA3HAJWg%2C%2C&rt=9'))
+print(parser('https://vlados.akeka.ru/news/'))
