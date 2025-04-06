@@ -1,3 +1,5 @@
+from itertools import count
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -12,6 +14,7 @@ from bs4 import BeautifulSoup
 
 def parser(url):
     result = {}
+    count = 0
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'html.parser')
     news = soup.find_all('div', attrs={'class': 'elem'})
@@ -19,6 +22,8 @@ def parser(url):
         title = item.find('h3').get_text()
         date = item.find('h4', class_='date').get_text()
         full_text = item.find('p').get_text()
+        count += 1
+        result['Count'] = count
         result[f'News {index + 1}'] = {
             'Title': title,
             'Date': date,
@@ -26,7 +31,7 @@ def parser(url):
         }
     return result
 
-for i in range(2):
+for i in range(parser('https://vlados.akeka.ru/news/').get('Count')):
     print(parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Title'))
     print(parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Date'))
     print(parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Full_text'))

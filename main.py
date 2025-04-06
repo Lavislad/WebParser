@@ -32,6 +32,7 @@ def clearURL(message):
 
 @bot.message_handler(commands=['parse'])
 def handle_take_url(message):
-    bot.send_message(message.chat.id, parser(URL))
+    for i in range(parser(URL).get('Count')):
+        bot.send_message(message.chat.id, parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Title')+'\n'+parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Date')+'\n'+parser('https://vlados.akeka.ru/news/').get(f'News {i + 1}').get('Full_text'))
 
 bot.polling()
